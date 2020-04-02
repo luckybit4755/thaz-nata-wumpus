@@ -1,0 +1,141 @@
+<HTML>
+	<HEAD>
+		<TITLE>board-test</TITLE>
+
+		<link rel="stylesheet" href="../css/css.css"></link>
+
+		<script type="text/javascript" src="../js/js.js"></script>
+		<script type="text/javascript" src="../js/hex.js"></script>
+
+		<script type="text/javascript">
+			/* CAVEAT: this is specific for the particular board image!!! */
+			const makeHexes = function( width, height ) {
+				let size = 80.5;
+
+				let p = 1.508;
+				let q = 1.75;
+
+				let xstart = 34;
+				let ystart = 34;
+
+				let ystart2 = ystart - 10;
+
+				let xish = function( x, angle, r ) { r = r ||size; return x + size + r * Math.cos( angle ) };
+				let yish = function( y, angle, r ) { r = r ||size; return y + size + r * Math.sin( angle ) };
+
+				let lz = 'zyxzyx'.split( '' );
+
+				let hexes = { 
+					settings:{size:xstart,ystart:ystart,ystart2:ystart2}
+					, cr:{}  
+					, xyz:{}
+					, points:[]
+				};
+
+				for ( let angle = 0 ; angle < Math.PI * 2 ; angle += Math.PI / 3 ) {
+					hexes.points.push( size * Math.cos( angle ) );
+					hexes.points.push( size * Math.sin( angle ) );
+				}
+
+				let column = 0;
+				for ( let x = xstart ; x < width ; x += size * p, column++ ) { 
+					let row = 0;
+					for ( let y = column % 2 ? ystart2 + size : ystart ; y < height ; y += size * q, row++ ) {
+
+						let cr = HXO.cr( column, row );
+						let xyz = HXO.cr2xyz( cr );
+
+						let hex = {cr:cr,xyz:xyz,x:x,y:y}
+
+						hexes.cr[ JZ.fmt( '%,%', cr.c, cr.r ) ] = hex;
+						hexes.xyz[ JZ.fmt( '%,%,%', xyz.x, xyz.y, xyz.z ) ] = hex;
+					}
+				}
+
+				return hexes;
+			};
+
+			window.onload = function() {
+				XOZO( document );
+
+				let board = XOZO( document.byTag( 'board' )[ 0 ] );
+				// this isn't set or I can't find it...
+				board.width = 3383;
+				board.height = 3709;
+
+				let canvas = board.add( document.nu( {
+					tag:'canvas'
+					, width: board.width
+					, height: board.height
+				} ) ).d2();
+
+				canvas.context.lineWidth = 1;
+
+				let size = 80.5;
+
+				let p = 1.508;
+				let q = 1.75;
+
+				let xstart = 34;
+				let ystart = 34;
+
+				let ystart2 = ystart - 10;
+
+				let xish = function( x, angle, r ) { r = r ||size; return x + size + r * Math.cos( angle ) };
+				let yish = function( y, angle, r ) { r = r ||size; return y + size + r * Math.sin( angle ) };
+
+				let lz = 'zyxzyx'.split( '' );
+				let r = size * 0.77;
+
+				let column = 0;
+				for ( let x = xstart ; x < board.width ; x += size * p, column++ ) { 
+					let row = 0;
+					for ( let y = column % 2 ? ystart2 + size : ystart ; y < board.height ; y += size * q, row++ ) {
+						let hexy = [];
+						for ( let angle = 0 ; angle < Math.PI * 2 ; angle += Math.PI / 3 ) {
+							hexy.push( xish( x, angle ) );
+							hexy.push( yish( y, angle ) );
+						}
+						canvas.poly( 'rgba(255,0,0,0.6)', hexy );
+						canvas.txt( 'red', [row,column].join( ', ' ), x + size, y + size );
+
+						let cr = HXO.cr( column, row );
+						let xyz = HXO.cr2xyz( cr );
+						canvas.txt( 'yellow', [xyz.x,xyz.y,xyz.z].join( ', ' ), x + size, y + size + 16 );
+
+						for( let i = 0 ; i < lz.length ; i++ ) {
+							let angle = 0.25 + 0.25 * i;
+							if ( i > 2 ) angle += 0.25;
+							angle *= Math.PI;
+							let v = xyz[ lz[ i ] ];
+							let s = lz[ i ] + ':' + v;
+							canvas.txt( 'yellow', s, xish( x - 6, angle, r ), yish( y + 4, angle, r ) );
+						}
+					}
+				}
+
+
+				board.onclick = function( e ) {
+					let x = e.offsetX - xstart;
+					let y = e.offsetY - ystart - 18; // ???
+
+					// charles?
+					x /= size * Math.sqrt(3);
+					y /= size * Math.sqrt(3);
+
+					let temp = Math.floor(x + Math.sqrt(3) * y + 1)
+
+					let q = Math.floor((Math.floor(2*x+1) + temp) / 3);
+					let r = Math.floor((temp + Math.floor(-x + Math.sqrt(3) * y + 1))/3);
+
+					console.log( JZ.fmt( '%,% -> %,%', x, y, q, r ) );
+
+
+				};
+			}; 
+		</script>
+	</HEAD>
+	<BODY>
+		<BOARD></BOARD>
+	</BODY>
+</HTML>
