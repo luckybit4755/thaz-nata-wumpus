@@ -52,10 +52,6 @@ const HXO = {
 				rz = -rx-ry
 			}
 		}
-
 		return this.xyz(rx, ry, rz);
 	}
-	
-
 };
-

@@ -1,6 +1,22 @@
 const JZ = {
 	  toString: function( o ) { return JSON.stringify( o ) }
 	, json:     function( o ) { return JSON.stringify( o ) }
+	, flat: function(o) {
+		let az = [];
+		let oz = [o];
+		while (oz.length) {
+			let w = oz.pop();
+			for ( let k in w ) {
+				let v = w[ k ];
+				if ( 'object' === typeof( v ) ) {
+					oz.push( v );
+				} else {
+					az.push( v );
+				}
+			}
+		}
+		return az.join( ',' );
+	}
 	, fmt: function() {
 		let a = arguments;
 		let s = a[ 0 ];

@@ -26,7 +26,12 @@
 				let lz = 'zyxzyx'.split( '' );
 
 				let hexes = { 
-					settings:{size:xstart,ystart:ystart,ystart2:ystart2}
+					settings:{
+						  size:size
+						, xstart:xstart
+						, ystart:ystart
+						, ystart2:ystart2
+					 }
 					, cr:{}  
 					, xyz:{}
 					, points:[]
@@ -41,16 +46,36 @@
 				for ( let x = xstart ; x < width ; x += size * p, column++ ) { 
 					let row = 0;
 					for ( let y = column % 2 ? ystart2 + size : ystart ; y < height ; y += size * q, row++ ) {
-
 						let cr = HXO.cr( column, row );
 						let xyz = HXO.cr2xyz( cr );
 
-						let hex = {cr:cr,xyz:xyz,x:x,y:y}
+						let hex = {cr:cr,xyz:xyz,x:x+size,y:y+size}
+						hex.p = hex.x + hex.y * width;
 
-						hexes.cr[ JZ.fmt( '%,%', cr.c, cr.r ) ] = hex;
-						hexes.xyz[ JZ.fmt( '%,%,%', xyz.x, xyz.y, xyz.z ) ] = hex;
-					}
+						hexes.cr[ JZ.flat( cr ) ] = hex;
+						hexes.xyz[ JZ.flat( xyz ) ] = hex;
+					}	
 				}
+
+				let maxDistance = size * siz;
+
+				hexes.ops.closest = function( x, y ) {
+					let theCR = false;
+					let theD = -1;
+					for ( let cr in hexes.cr ) {
+						let hex = hexes.cr[ cr ];
+						let dx = x - hex.x;
+						let dy = y - hex.y;
+						let d = Math.round( dx * dx + dy * dy );
+						if ( d > maxDistance ) continue;
+						if ( !theCR || d < theD ) {
+							theD = d;
+							theCR = cr;
+						}
+					}
+					return theCR;
+				}
+
 
 				return hexes;
 			};
@@ -70,22 +95,93 @@
 				} ) ).d2();
 
 				canvas.context.lineWidth = 1;
+				let hexes = makeHexes( board.width, board.height );
 
-				let size = 80.5;
+				let last = 0;
+				for ( let cr in hexes.cr ) {
+					let hex = hexes.cr[ cr ];
 
-				let p = 1.508;
-				let q = 1.75;
+					let hexd = hexes.points.map((v,i)=>v+(i%2?hex.y:hex.x));
+					canvas.poly( 'rgba(255,0,0,0.6)', hexd );
+					canvas.txt( 'yellow', JZ.flat( hex.cr ), hex.x, hex.y );
+					canvas.txt( 'yellow', JZ.flat( hex.xyz ), hex.x-9, hex.y+9 );
+					canvas.txt( 'white', hex.p, hex.x-9, hex.y+19 );
+				}
 
-				let xstart = 34;
-				let ystart = 34;
 
-				let ystart2 = ystart - 10;
+				let pz = Object.values( hexes.cr ).sort( (a,b) => a.p - b.p );
+				let distance = function( i, x, y ) {
+					let hex = pz[ i ];
+					let dx = x - hex.x;
+					let dy = y - hex.y;
+					let d = Math.round( dx * dx + dy * dy );
+					return {i:i,d:d}
+				};
 
-				let xish = function( x, angle, r ) { r = r ||size; return x + size + r * Math.cos( angle ) };
-				let yish = function( y, angle, r ) { r = r ||size; return y + size + r * Math.sin( angle ) };
+				board.onclick = function( e ) {
+					let x = e.offsetX;
+					let y = e.offsetY;
 
-				let lz = 'zyxzyx'.split( '' );
-				let r = size * 0.77;
+					if ( true ) {
+						let theCR = false;
+						let theD = -1;
+						for ( let cr in hexes.cr ) {
+							let hex = hexes.cr[ cr ];
+							let dx = x - hex.x;
+							let dy = y - hex.y;
+							let d = Math.round( dx * dx + dy * dy );
+							if ( !theCR || d < theD ) {
+								theD = d;
+								theCR = cr;
+							}
+						}
+						console.log( theCR + ' cz ' + theD );
+
+						// binary search not working?
+						return;
+					}
+
+					console.log( x + ',' + y );
+					let l = pz.length - 1;
+
+					let d0 = distance( 0, x, y );
+					let d1 = distance( l, x, y );
+					let match = false;
+
+					for ( let caution = 0 ; caution < 33 ; caution++ ) {
+						console.log( '---------------------------------' );
+						console.log( 'd0' + JZ.json( d0 ) );
+						console.log( 'd1' + JZ.json( d1 ) );
+
+						let m = d0.i + Math.floor( ( d1.i - d0.i ) / 2 );
+						if ( m == d0.i ) {
+							match = ( d0.d < d1.d ) ? d0 : d1;
+							break;
+						}
+
+						let dm = distance( m, x, y );
+						console.log( 'dm' + JZ.json( dm ) );
+
+						let direction = 'idk';
+						if ( d0.d < d1.d ) {
+							d1 = dm;
+							direction = 'left';
+						} else {
+							d0 = dm;
+							direction = 'right';
+						}
+							
+						console.log( JZ.fmt( 'go %: % to %', direction, d0.i, d1.i ) );
+					}
+
+					console.log( 'match is ' + JZ.json( match ) );
+					if ( match ) {
+						match = JZ.flat( pz[ match.i ].cr );
+						console.log( 'match is ' + match )
+					}
+				}
+
+				return;
 
 				let column = 0;
 				for ( let x = xstart ; x < board.width ; x += size * p, column++ ) { 
