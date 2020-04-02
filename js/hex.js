@@ -23,35 +23,75 @@ const HXO = {
 	, cr2xyz: function( cr ) {
 		return this.oddq_to_cube( cr.c, cr.r );
 	}
-	, pixel_to_hex: function( point, size ) {
-		let c = ( 2./3 * point.x                        ) / size
-		var r = (-1./3 * point.x  +  Math.sqrt(3)/3 * point.y) / size
-		return this.hex_round(this.cr(c, r));
-	}
-	, hex_round: function( cr ) {
-    	//return cube_to_axial(cube_round(axial_to_cube(hex)))
-    	//return this.cube_to_axial(
-		return this.cube_round( this.cr2xyz( cr ) );
-	}
 
-	, cube_round: function(xyz) {
-		var rx = Math.round(xyz.x)
-		var ry = Math.round(xyz.y)
-		var rz = Math.round(xyz.z)
+	, makeHexes: function() {
+		/* this is specifically tailored for b3.jpg... */
+		let width = 3383;
+		let height = 3709;
 
-		var x_diff = Math.abs(rx - xyz.x)
-		var y_diff = Math.abs(ry - xyz.y)
-		var z_diff = Math.abs(rz - xyz.z)
+		let size = 80.5;
 
-		if ( x_diff > y_diff && x_diff > z_diff ) {
-			rx = -ry-rz
-		} else {
-			if ( y_diff > z_diff ) {
-				ry = -rx-rz
-			} else {
-				rz = -rx-ry
-			}
+		let p = 1.508;
+		let q = 1.75;
+
+		let xstart = 34;
+		let ystart = 34;
+
+		let ystart2 = ystart - 10;
+
+		let hexes = { 
+			settings:{
+				  size:size
+				, xstart:xstart
+				, ystart:ystart
+				, ystart2:ystart2
+			 }
+			, cr:{}  
+			, xyz:{}
+			, points:[]
+		};
+
+		for ( let angle = 0 ; angle < Math.PI * 2 ; angle += Math.PI / 3 ) {
+			hexes.points.push( size * Math.cos( angle ) );
+			hexes.points.push( size * Math.sin( angle ) );
 		}
-		return this.xyz(rx, ry, rz);
+
+		let column = 0;
+		for ( let x = xstart ; x < width ; x += size * p, column++ ) { 
+			let row = 0;
+			for ( let y = column % 2 ? ystart2 + size : ystart ; y < height ; y += size * q, row++ ) {
+				let cr = HXO.cr( column, row );
+				let xyz = HXO.cr2xyz( cr );
+
+				let hex = {cr:cr,xyz:xyz,x:x+size,y:y+size}
+
+				hexes.cr[ JZ.flat( cr ) ] = hex;
+				hexes.xyz[ JZ.flat( xyz ) ] = hex;
+			
+				if ( 22 == row ) break; // south of here is sea :-P
+			}	
+		}
+
+		let maxDistance = size * size;
+
+		hexes.ops = {};
+		hexes.ops.closest = function( x, y ) {
+			let theCR = false;
+			let theD = -1;
+			for ( let cr in hexes.cr ) {
+				let hex = hexes.cr[ cr ];
+				let dx = x - hex.x;
+				let dy = y - hex.y;
+				let d = Math.round( dx * dx + dy * dy );
+				if ( d > maxDistance ) continue;
+				if ( !theCR || d < theD ) {
+					theD = d;
+					theCR = cr;
+				}
+			}
+			return theCR;
+		}
+
+		return hexes;
 	}
 };

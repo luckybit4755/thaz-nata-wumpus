@@ -8,78 +8,6 @@
 		<script type="text/javascript" src="../js/hex.js"></script>
 
 		<script type="text/javascript">
-			/* CAVEAT: this is specific for the particular board image!!! */
-			const makeHexes = function( width, height ) {
-				let size = 80.5;
-
-				let p = 1.508;
-				let q = 1.75;
-
-				let xstart = 34;
-				let ystart = 34;
-
-				let ystart2 = ystart - 10;
-
-				let xish = function( x, angle, r ) { r = r ||size; return x + size + r * Math.cos( angle ) };
-				let yish = function( y, angle, r ) { r = r ||size; return y + size + r * Math.sin( angle ) };
-
-				let lz = 'zyxzyx'.split( '' );
-
-				let hexes = { 
-					settings:{
-						  size:size
-						, xstart:xstart
-						, ystart:ystart
-						, ystart2:ystart2
-					 }
-					, cr:{}  
-					, xyz:{}
-					, points:[]
-				};
-
-				for ( let angle = 0 ; angle < Math.PI * 2 ; angle += Math.PI / 3 ) {
-					hexes.points.push( size * Math.cos( angle ) );
-					hexes.points.push( size * Math.sin( angle ) );
-				}
-
-				let column = 0;
-				for ( let x = xstart ; x < width ; x += size * p, column++ ) { 
-					let row = 0;
-					for ( let y = column % 2 ? ystart2 + size : ystart ; y < height ; y += size * q, row++ ) {
-						let cr = HXO.cr( column, row );
-						let xyz = HXO.cr2xyz( cr );
-
-						let hex = {cr:cr,xyz:xyz,x:x+size,y:y+size}
-						hex.p = hex.x + hex.y * width;
-
-						hexes.cr[ JZ.flat( cr ) ] = hex;
-						hexes.xyz[ JZ.flat( xyz ) ] = hex;
-					}	
-				}
-
-				let maxDistance = size * siz;
-
-				hexes.ops.closest = function( x, y ) {
-					let theCR = false;
-					let theD = -1;
-					for ( let cr in hexes.cr ) {
-						let hex = hexes.cr[ cr ];
-						let dx = x - hex.x;
-						let dy = y - hex.y;
-						let d = Math.round( dx * dx + dy * dy );
-						if ( d > maxDistance ) continue;
-						if ( !theCR || d < theD ) {
-							theD = d;
-							theCR = cr;
-						}
-					}
-					return theCR;
-				}
-
-
-				return hexes;
-			};
-
 			window.onload = function() {
 				XOZO( document );
 
@@ -94,140 +22,22 @@
 					, height: board.height
 				} ) ).d2();
 
-				canvas.context.lineWidth = 1;
-				let hexes = makeHexes( board.width, board.height );
+				canvas.context.lineWidth = 3;
+				let hexes = HXO.makeHexes();
 
 				let last = 0;
 				for ( let cr in hexes.cr ) {
 					let hex = hexes.cr[ cr ];
 
 					let hexd = hexes.points.map((v,i)=>v+(i%2?hex.y:hex.x));
-					canvas.poly( 'rgba(255,0,0,0.6)', hexd );
+					canvas.poly( 'rgba(0,0,0,0.1)', hexd );
 					canvas.txt( 'yellow', JZ.flat( hex.cr ), hex.x, hex.y );
 					canvas.txt( 'yellow', JZ.flat( hex.xyz ), hex.x-9, hex.y+9 );
-					canvas.txt( 'white', hex.p, hex.x-9, hex.y+19 );
 				}
-
-
-				let pz = Object.values( hexes.cr ).sort( (a,b) => a.p - b.p );
-				let distance = function( i, x, y ) {
-					let hex = pz[ i ];
-					let dx = x - hex.x;
-					let dy = y - hex.y;
-					let d = Math.round( dx * dx + dy * dy );
-					return {i:i,d:d}
-				};
 
 				board.onclick = function( e ) {
-					let x = e.offsetX;
-					let y = e.offsetY;
-
-					if ( true ) {
-						let theCR = false;
-						let theD = -1;
-						for ( let cr in hexes.cr ) {
-							let hex = hexes.cr[ cr ];
-							let dx = x - hex.x;
-							let dy = y - hex.y;
-							let d = Math.round( dx * dx + dy * dy );
-							if ( !theCR || d < theD ) {
-								theD = d;
-								theCR = cr;
-							}
-						}
-						console.log( theCR + ' cz ' + theD );
-
-						// binary search not working?
-						return;
-					}
-
-					console.log( x + ',' + y );
-					let l = pz.length - 1;
-
-					let d0 = distance( 0, x, y );
-					let d1 = distance( l, x, y );
-					let match = false;
-
-					for ( let caution = 0 ; caution < 33 ; caution++ ) {
-						console.log( '---------------------------------' );
-						console.log( 'd0' + JZ.json( d0 ) );
-						console.log( 'd1' + JZ.json( d1 ) );
-
-						let m = d0.i + Math.floor( ( d1.i - d0.i ) / 2 );
-						if ( m == d0.i ) {
-							match = ( d0.d < d1.d ) ? d0 : d1;
-							break;
-						}
-
-						let dm = distance( m, x, y );
-						console.log( 'dm' + JZ.json( dm ) );
-
-						let direction = 'idk';
-						if ( d0.d < d1.d ) {
-							d1 = dm;
-							direction = 'left';
-						} else {
-							d0 = dm;
-							direction = 'right';
-						}
-							
-						console.log( JZ.fmt( 'go %: % to %', direction, d0.i, d1.i ) );
-					}
-
-					console.log( 'match is ' + JZ.json( match ) );
-					if ( match ) {
-						match = JZ.flat( pz[ match.i ].cr );
-						console.log( 'match is ' + match )
-					}
+					console.log( hexes.ops.closest( e.offsetX, e.offsetY ) );
 				}
-
-				return;
-
-				let column = 0;
-				for ( let x = xstart ; x < board.width ; x += size * p, column++ ) { 
-					let row = 0;
-					for ( let y = column % 2 ? ystart2 + size : ystart ; y < board.height ; y += size * q, row++ ) {
-						let hexy = [];
-						for ( let angle = 0 ; angle < Math.PI * 2 ; angle += Math.PI / 3 ) {
-							hexy.push( xish( x, angle ) );
-							hexy.push( yish( y, angle ) );
-						}
-						canvas.poly( 'rgba(255,0,0,0.6)', hexy );
-						canvas.txt( 'red', [row,column].join( ', ' ), x + size, y + size );
-
-						let cr = HXO.cr( column, row );
-						let xyz = HXO.cr2xyz( cr );
-						canvas.txt( 'yellow', [xyz.x,xyz.y,xyz.z].join( ', ' ), x + size, y + size + 16 );
-
-						for( let i = 0 ; i < lz.length ; i++ ) {
-							let angle = 0.25 + 0.25 * i;
-							if ( i > 2 ) angle += 0.25;
-							angle *= Math.PI;
-							let v = xyz[ lz[ i ] ];
-							let s = lz[ i ] + ':' + v;
-							canvas.txt( 'yellow', s, xish( x - 6, angle, r ), yish( y + 4, angle, r ) );
-						}
-					}
-				}
-
-
-				board.onclick = function( e ) {
-					let x = e.offsetX - xstart;
-					let y = e.offsetY - ystart - 18; // ???
-
-					// charles?
-					x /= size * Math.sqrt(3);
-					y /= size * Math.sqrt(3);
-
-					let temp = Math.floor(x + Math.sqrt(3) * y + 1)
-
-					let q = Math.floor((Math.floor(2*x+1) + temp) / 3);
-					let r = Math.floor((temp + Math.floor(-x + Math.sqrt(3) * y + 1))/3);
-
-					console.log( JZ.fmt( '%,% -> %,%', x, y, q, r ) );
-
-
-				};
 			}; 
 		</script>
 	</HEAD>
