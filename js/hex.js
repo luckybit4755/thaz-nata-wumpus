@@ -23,7 +23,6 @@ const HXO = {
 	, cr2xyz: function( cr ) {
 		return this.oddq_to_cube( cr.c, cr.r );
 	}
-
 	, makeHexes: function() {
 		/* this is specifically tailored for b3.jpg... */
 		let width = 3383;
@@ -47,7 +46,7 @@ const HXO = {
 				, ystart2:ystart2
 			 }
 			, cr:{}  
-			, xyz:{}
+			//, xyz:{}
 			, points:[]
 		};
 
@@ -61,37 +60,35 @@ const HXO = {
 			let row = 0;
 			for ( let y = column % 2 ? ystart2 + size : ystart ; y < height ; y += size * q, row++ ) {
 				let cr = HXO.cr( column, row );
-				let xyz = HXO.cr2xyz( cr );
+				//let xyz = HXO.cr2xyz( cr );
 
-				let hex = {cr:cr,xyz:xyz,x:x+size,y:y+size}
+				let hex = {cr:cr,/*xyz:xyz,*/x:x+size,y:y+size}
 
 				hexes.cr[ JZ.flat( cr ) ] = hex;
-				hexes.xyz[ JZ.flat( xyz ) ] = hex;
+				//hexes.xyz[ JZ.flat( xyz ) ] = hex;
 			
 				if ( 22 == row ) break; // south of here is sea :-P
 			}	
 		}
 
-		let maxDistance = size * size;
-
-		hexes.ops = {};
-		hexes.ops.closest = function( x, y ) {
-			let theCR = false;
-			let theD = -1;
-			for ( let cr in hexes.cr ) {
-				let hex = hexes.cr[ cr ];
-				let dx = x - hex.x;
-				let dy = y - hex.y;
-				let d = Math.round( dx * dx + dy * dy );
-				if ( d > maxDistance ) continue;
-				if ( !theCR || d < theD ) {
-					theD = d;
-					theCR = cr;
-				}
-			}
-			return theCR;
-		}
 
 		return hexes;
+	}
+	, closest: function( hexes, x, y ) {
+		let theCR = false;
+		let theD = -1;
+		let maxDistance = hexes.settings.size * hexes.settings.size;
+		for ( let cr in hexes.cr ) {
+			let hex = hexes.cr[ cr ];
+			let dx = x - hex.x;
+			let dy = y - hex.y;
+			let d = Math.round( dx * dx + dy * dy );
+			if ( d > maxDistance ) continue;
+			if ( !theCR || d < theD ) {
+				theD = d;
+				theCR = cr;
+			}
+		}
+		return theCR;
 	}
 };

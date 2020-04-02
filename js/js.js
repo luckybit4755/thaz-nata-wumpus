@@ -1,6 +1,6 @@
 const JZ = {
-	  toString: function( o ) { return JSON.stringify( o ) }
-	, json:     function( o ) { return JSON.stringify( o ) }
+	  toString: function( o, r, s ) { return JSON.stringify( o, r, s ) }
+	, json:     function( o, r, s ) { return this.toString( o, r, s ) }
 	, flat: function(o) {
 		let az = [];
 		let oz = [o];
