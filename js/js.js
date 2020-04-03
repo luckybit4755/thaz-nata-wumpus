@@ -47,7 +47,9 @@ const XOZO_ALL = function( fcku ) {
 };
 
 const XOZO_DOCUMENT = function( fcku ) {
+	fcku.add = function( n ) { return fcku.body.appendChild( n ) };
 	fcku.byTag = function( tag ) { return fcku.getElementsByTagName( tag ) };
+	fcku.theTag = function( tag ) { return XOZO( fcku.byTag( tag )[ 0 ] ) };
 	fcku.byId  = function( id ) { return document.getElementId( id ) };
 	fcku.nu = function( attributes ) {
 		let tag = attributes.tag;
@@ -74,13 +76,16 @@ const XOZO_CANVAS = function( fcku ) {
 		fcku.context = fcku.context || fcku.getContext( '2d' );
 		return fcku;
 	};
+	fcku.c2 = function() {
+		if ( !fcku.context ) fcku.d2();
+		return fcku.context;
+	};
 	fcku.txt = function( style, txt, x, y ) {
 		( fcku.context || fcku.d2().context ).fillStyle = style;
 		( fcku.context || fcku.d2().context ).fillText( txt, x, y );
 	};
 	fcku.poly = function() {
-		if ( !fcku.context ) fcku.d2();
-		let c = fcku.context;
+		let c = fcku.c2();
 
 		let a = arguments;
 		c.strokeStyle = a[ 0 ];
@@ -103,8 +108,7 @@ const XOZO_CANVAS = function( fcku ) {
 	};
 
 	fcku.circle = function( style, x, y, radius ) {
-		if ( !fcku.context ) fcku.d2();
-		let c = fcku.context;
+		let c = fcku.c2();
 		c.strokeStyle = style;
 		radius = radius || 44;
 		c.beginPath();
@@ -112,6 +116,19 @@ const XOZO_CANVAS = function( fcku ) {
 		c.stroke();
 	};
 
+	fcku.rect = function( style, x, y, w, h ) {
+		let c = fcku.c2();
+		c.strokeStyle = style;
+		c.beginPath();
+		c.rect( x, y, w, h );
+		c.stroke();
+	};
+
+	fcku.fill = function( style ) {
+		if ( !fcku.context ) fcku.d2();
+        fcku.context.fillStyle = style
+        fcku.context.fill();
+	};
 
 	return fcku;
 }
