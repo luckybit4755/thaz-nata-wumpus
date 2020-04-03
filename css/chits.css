@@ -1,0 +1,370 @@
+banisher {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -0px 0px;
+	position   : absolute;
+}
+
+berserker {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -279px 0px;
+	position   : absolute;
+}
+
+demon {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -558px 0px;
+	position   : absolute;
+}
+
+disperser {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -837px 0px;
+	position   : absolute;
+}
+
+dragon_charmer {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -1116px 0px;
+	position   : absolute;
+}
+
+eagle {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -1395px 0px;
+	position   : absolute;
+}
+
+paralyzer {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -1674px 0px;
+	position   : absolute;
+}
+
+revivor {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -1953px 0px;
+	position   : absolute;
+}
+
+teleporter {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -2232px 0px;
+	position   : absolute;
+}
+
+troll {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -2511px 0px;
+	position   : absolute;
+}
+
+being_choice {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -2790px 0px;
+	position   : absolute;
+}
+
+second_being {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -3069px 0px;
+	position   : absolute;
+}
+
+dragon_normal {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -3348px 0px;
+	position   : absolute;
+}
+
+dragon_enraged {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -3627px 0px;
+	position   : absolute;
+}
+
+dragon_part_1_head {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -3906px 0px;
+	position   : absolute;
+}
+
+dragon_part_1x_head {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -4185px 0px;
+	position   : absolute;
+}
+
+dragon_part_2_body {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -4464px 0px;
+	position   : absolute;
+}
+
+dragon_part_3_wings {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -4743px 0px;
+	position   : absolute;
+}
+
+dragon_part_4_legs {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -5022px 0px;
+	position   : absolute;
+}
+
+dragon_part_5_tail {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -5301px 0px;
+	position   : absolute;
+}
+
+flamed {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -5580px 0px;
+	position   : absolute;
+}
+
+yellow_hero {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -5859px 0px;
+	position   : absolute;
+}
+
+yellow_magesword {
+	width      : 279px;
+	height     : 282px;
+	background : url('../images/scanned/chit-strip.jpg') -6138px 0px;
+	position   : absolute;
+}
+
+yellow_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -6417px 0px;
+	position   : absolute;
+}
+
+yellow_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -6696px 0px;
+	position   : absolute;
+}
+
+yellow_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -6975px 0px;
+	position   : absolute;
+}
+
+magical_defense {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -7254px 0px;
+	position   : absolute;
+}
+
+wound {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -7533px 0px;
+	position   : absolute;
+}
+
+orange_hero {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -7812px 0px;
+	position   : absolute;
+}
+
+purple_hero {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -8091px 0px;
+	position   : absolute;
+}
+
+green_hero {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -8370px 0px;
+	position   : absolute;
+}
+
+blue_hero {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -8649px 0px;
+	position   : absolute;
+}
+
+brown_hero {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -8928px 0px;
+	position   : absolute;
+}
+
+orange_magesword {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -9207px 0px;
+	position   : absolute;
+}
+
+purple_magesword {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -9486px 0px;
+	position   : absolute;
+}
+
+green_magesword {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -9765px 0px;
+	position   : absolute;
+}
+
+blue_magesword {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -10044px 0px;
+	position   : absolute;
+}
+
+brown_magesword {
+	width      : 279px;
+	height     : 279px;
+	background : url('../images/scanned/chit-strip.jpg') -10323px 0px;
+	position   : absolute;
+}
+
+orange_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -10602px 0px;
+	position   : absolute;
+}
+
+purple_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -10881px 0px;
+	position   : absolute;
+}
+
+green_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -11160px 0px;
+	position   : absolute;
+}
+
+blue_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -11439px 0px;
+	position   : absolute;
+}
+
+brown_knight {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -11718px 0px;
+	position   : absolute;
+}
+
+orange_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -11997px 0px;
+	position   : absolute;
+}
+
+purple_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -12276px 0px;
+	position   : absolute;
+}
+
+green_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -12555px 0px;
+	position   : absolute;
+}
+
+blue_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -12834px 0px;
+	position   : absolute;
+}
+
+brown_men_at_arms {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -13113px 0px;
+	position   : absolute;
+}
+
+orange_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -13392px 0px;
+	position   : absolute;
+}
+
+purple_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -13671px 0px;
+	position   : absolute;
+}
+
+green_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -13950px 0px;
+	position   : absolute;
+}
+
+blue_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -14229px 0px;
+	position   : absolute;
+}
+
+brown_sniper {
+	width      : 180px;
+	height     : 180px;
+	background : url('../images/scanned/chit-strip.jpg') -14508px 0px;
+	position   : absolute;
+}

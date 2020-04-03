@@ -1,0 +1,42 @@
+<HTML>
+	<HEAD>
+		<TITLE>chit-demo</TITLE>
+
+        <link rel="stylesheet" href="../css/css.css"></link>
+        <link rel="stylesheet" href="../css/chits.css"></link>
+        <script type="text/javascript" src="../js/js.js"></script>
+        <script type="text/javascript" src="../js/hex.js"></script>
+
+		<script type="text/javascript">
+			window.onload = function() {
+				XOZO( document );
+
+				let chits = 'banisher berserker demon disperser dragon_charmer eagle paralyzer revivor teleporter troll being_choice second_being dragon_normal dragon_enraged dragon_part_1_head dragon_part_1x_head dragon_part_2_body dragon_part_3_wings dragon_part_4_legs dragon_part_5_tail flamed yellow_hero yellow_magesword yellow_knight yellow_men_at_arms yellow_sniper magical_defense wound orange_hero purple_hero green_hero blue_hero brown_hero orange_magesword purple_magesword green_magesword blue_magesword brown_magesword orange_knight purple_knight green_knight blue_knight brown_knight orange_men_at_arms purple_men_at_arms green_men_at_arms blue_men_at_arms brown_men_at_arms orange_sniper purple_sniper green_sniper blue_sniper brown_sniper'.split( ' ' );
+
+				let n = chits.length;
+				for ( let i = 0 ; i < n ; i++ ) {
+					let name = chits[ i ];
+					chits[ i ] = document.add( document.nu( {
+						  tag:name
+						, text:name 
+					} ) );
+				}
+
+				let spinner = function() {
+					let radius = 888;
+					let lul = new Date().getTime() / 5000;
+					for ( let i = 0 ; i < n ; i++ ) {
+						let chit = chits[ i ];
+						let angle = Math.PI * 2 / n * i - lul;
+						chit.style.top = radius - radius * Math.cos( angle );
+						chit.style.left = radius - radius * Math.sin( angle );
+					}
+					setTimeout( function() { requestAnimationFrame( spinner ); } , 50 );
+				};
+				spinner();
+			};
+		</script>
+	</HEAD>
+	<BODY>
+	</BODY>
+</HTML>

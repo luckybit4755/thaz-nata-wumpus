@@ -1,6 +1,7 @@
 const JZ = {
 	  toString: function( o, r, s ) { return JSON.stringify( o, r, s ) }
 	, json:     function( o, r, s ) { return this.toString( o, r, s ) }
+	, parse: function( d ) { return JSON.parse( d ); }
 	, flat: function(o) {
 		let az = [];
 		let oz = [o];
@@ -22,6 +23,12 @@ const JZ = {
 		let s = a[ 0 ];
 		for ( let i = 1 ; i < a.length ; i++ ) s = s.replace( /%[a-z]*/, a[ i ] );
 		return s;
+	}
+	, get: function( url, callback ) {
+		let x = new XMLHttpRequest();
+		x.onload = function(e) { callback( e, this.responseText ) };
+		x.open( 'get', url, true );
+		x.send();
 	}
 };
 
@@ -57,14 +64,17 @@ const XOZO_DOCUMENT = function( fcku ) {
 		let n = XOZO(
 			isText ? document.createTextNode( attributes.value ) : document.createElement( tag )
 		);
-	
-		for ( let key in attributes ) {
-			let value = attributes[ key ];
-			switch( key ) {
-				case 'tag': break;
-				case 'kids': for( let kk in value ) { n.add( this.nu( value[ kk ] ) ); } break;
-				default: n.setAttribute( key, value );
-			} 
+
+		if ( !isText ) {	
+			for ( let key in attributes ) {
+				let value = attributes[ key ];
+				switch( key ) {
+					case 'tag': break;
+					case 'text': n.add( document.createTextNode( value ) ); break;
+					case 'kids': for( let kk in value ) { n.add( this.nu( value[ kk ] ) ); } break;
+					default: n.setAttribute( key, value );
+				} 
+			}
 		}
 		return n;
 	};
