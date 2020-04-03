@@ -1,0 +1,305 @@
+<HTML>
+	<HEAD>
+		<TITLE>chit-test</TITLE>
+
+        <link rel="stylesheet" href="../css/css.css"></link>
+        <script type="text/javascript" src="../js/js.js"></script>
+        <script type="text/javascript" src="../js/hex.js"></script>
+
+		<script type="text/javascript">
+			window.onload = function() {
+				let chits = {
+	"banisher": {
+		"x": 11.5,
+		"y": 11.5,
+		"w": 279,
+		"h": 282
+	},
+	"berserker": {
+		"x": 415.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"demon": {
+		"x": 810.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"disperser": {
+		"x": 1229.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon_charmer": {
+		"x": 1629.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"eagle": {
+		"x": 2029.5,
+		"y": 7.5,
+		"w": 279,
+		"h": 282
+	},
+	"paralyzer": {
+		"x": 2429.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"revivor": {
+		"x": 2829.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"teleporter": {
+		"x": 3235.5,
+		"y": 11.5,
+		"w": 279,
+		"h": 282
+	},
+	"troll": {
+		"x": 3657.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"being_choice": {
+		"x": 4065.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"second_being": {
+		"x": 4484.5,
+		"y": 15.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:normal": {
+		"x": 7.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:enraged": {
+		"x": 400.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:1:head": {
+		"x": 815.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:1x:head": {
+		"x": 1225.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:2:body": {
+		"x": 1620.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:3:wings": {
+		"x": 2033.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:4:legs": {
+		"x": 2423.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"dragon:part:4:tail": {
+		"x": 2820.5,
+		"y": 328.5,
+		"w": 279,
+		"h": 282
+	},
+	"flamed": {
+		"x": 3233.5,
+		"y": 335.5,
+		"w": 279,
+		"h": 282
+	},
+	"yellow_hero": {
+		"x": 5.5,
+		"y": 641.5,
+		"w": 279,
+		"h": 282
+	},
+	"yellow_magesword": {
+		"x": 400.5,
+		"y": 641.5,
+		"w": 279,
+		"h": 282
+	},
+	"yellow_knight": {
+		"x": 10,
+		"y": 949,
+		"w": 180,
+		"h": 180
+	},
+	"yellow_men_at_arms": {
+		"x": 400,
+		"y": 949,
+		"w": 180,
+		"h": 180
+	},
+	"yellow_sniper": {
+		"x": 810,
+		"y": 949,
+		"w": 180,
+		"h": 180
+	},
+	"magical_defense": {
+		"x": 1219,
+		"y": 954,
+		"w": 180,
+		"h": 180
+	},
+	"wound": {
+		"x": 1644,
+		"y": 954,
+		"w": 180,
+		"h": 180
+	}
+};
+
+                XOZO( document );
+
+				let names = Object.keys( chits );
+
+                let img = document.theTag( 'img' );
+                let canvas = document.add( document.nu( {
+                    tag:'canvas'
+                    , width: img.width
+                    , height: img.height
+                } ) ).d2();
+
+				canvas.context.font = '16px Arial';
+				canvas.context.drawImage( img, 0, 0 );
+				img.parentNode.removeChild( img );
+
+				let chip_offset = 400;
+
+				let big_chit_width = 310;
+				let big_chit_height = 313;
+
+				let little_chit_width = 200;
+				let little_chit_height = 200;
+
+				let nameIndex = 0;
+
+				let chits_in_rows = [ 12, 9, 2, 5 ];
+
+				// this was created to make the initial guesses about the offsets
+				// unfortunately, I did a crappy job of taking / preparing the images
+				// so I have to fix it up a bit...
+
+				for( let row = 0 ; row < 4 ; row++ ) {
+					let y = row * big_chit_height;
+					let chit_width  = ( 3 == row ) ? little_chit_width  : big_chit_width;
+					let chit_height = ( 3 == row ) ? little_chit_height : big_chit_height;
+					let chits_in_row = chits_in_rows[ row ];
+					for ( let x = 0, i = 0 ; x < img.width && i < chits_in_row ; x += chip_offset, i++ ) {
+						let name = names[ nameIndex++ ];
+
+						if ( !( name in chits ) ) {
+							chits[ name ] = {x:x,y:y,w:chit_width,h:chit_height}
+							canvas.rect( 'red', x, y, chit_width, chit_height );
+							canvas.txt( 'yellow', name, x + 33, y + 33 );
+						}
+					}
+				}
+
+				if ( !true ) {
+					// crop in a bit..
+					for ( let name in chits ) {
+						let chit = chits[ name ];
+						let x = chit.x;
+						let y = chit.y;
+						let w = chit.w;
+						let h = chit.h;
+
+						let q = w * 0.05;
+						x += q; 
+						y += q; 
+						w -= 2 * q; 
+						h -= 2 * q;
+
+						chit.x = x;
+						chit.y = y;
+						chit.w = w;
+						chit.h = h;
+
+						canvas.rect( 'red', x, y, w, h );
+						canvas.txt( 'yellow', name, x+44, y+44 );
+					}
+				}
+
+				console.log( JZ.json( chits, false, '\t' ) );
+
+				let maxHeight = -1;
+				let maxWidth  = -1;
+				let minHeight = 4444;
+				let minWidth  = 4444;
+				let totalWidth = 0;
+				for ( let name in chits ) {
+					totalWidth++;
+					let chit = chits[ name ];
+					if ( chit.h > maxHeight ) maxHeight = chit.h;
+					if ( chit.w > maxWidth  ) maxWidth  = chit.w;
+					if ( chit.h < minHeight ) minHeight = chit.h;
+					if ( chit.w < minWidth  ) minWidth  = chit.w;
+				}
+					
+				totalWidth *= maxWidth;
+				let nu = document.add( document.nu( { tag:'canvas', width: totalWidth, height: maxHeight } ) ).d2();
+
+				let x = 0;
+				for ( let name in chits ) {
+					let chit = chits[ name ];
+					let imageData = canvas.context.getImageData( chit.x, chit.y, chit.w, chit.h );
+					nu.context.putImageData( imageData, x, 0 );
+					x += maxWidth;
+				}
+
+				let nfo = {
+					w:maxWidth, 
+					h:maxHeight, 
+					wSmall:minWidth, 
+					wSmall:minHeight,
+					firstSmall:23,
+					chits:Object.keys( chits ).map( v=>v.replace( /_/g, ' ') )
+				};
+				console.log( JZ.json( nfo ) );
+				console.log( nfo.chits[ 23 ] );
+
+
+				canvas.parentNode.removeChild( canvas );
+
+           		var data = nu.toDataURL( 'image/jpeg', 0.9 );
+				let downer = document.nu( { tag:'a', href:data,download:'chit-strip.jpg'} );
+				downer.click();
+				
+			};
+		</script>
+	</HEAD>
+	<BODY>
+		<img src="../images/scanned/chits.png">
+	</BODY>
+</HTML>
