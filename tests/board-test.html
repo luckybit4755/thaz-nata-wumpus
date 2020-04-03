@@ -58,8 +58,7 @@
 					, 'Cave': '13,9'
 					, 'Hollow Log': '15,17'
 					, 'Lair of Brimstone': '13,12'
-
-				}
+				};
 
 				for( let type in typed ) {
 					let crz = typed[ type ].trim().split( ' ' );
@@ -100,6 +99,9 @@
 					canvas.context.fill();
 				};
 
+				canvas.context.font = '16px Arial';
+				let q = 3.8; // pixels per character for this font...
+
 				let draw = function() {
 					canvas.context.clearRect( 0, 0, board.width, board.height );
 					for ( let cr in hexes.cr ) {
@@ -114,8 +116,11 @@
 							case 'swamp':    fill( 'rgba(255,255,0,0.4)'   ); break;
 							case 'mountain': fill( 'rgba(255,255,255,0.2)' ); break;
 						}
-						canvas.txt( 'yellow', JZ.flat( hex.cr ), hex.x, hex.y );
-						if ( hex.type ) canvas.txt( 'yellow', hex.type, hex.x-9, hex.y+9 );
+						canvas.txt( 'yellow', JZ.flat( hex.cr ), hex.x-18, hex.y-4 );
+						if ( hex.type ) {
+							let xo = hex.type.length * q;
+							canvas.txt( 'yellow', hex.type, hex.x-xo, hex.y+16 );
+						}
 					}
 				}
 				draw();
