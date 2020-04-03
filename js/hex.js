@@ -24,7 +24,7 @@ const HXO = {
 		return this.oddq_to_cube( cr.c, cr.r );
 	}
 	, makeHexes: function() {
-		/* this is specifically tailored for b3.jpg... */
+		/* this is specifically tailored for board.jpg... */
 		let width = 3383;
 		let height = 3709;
 
