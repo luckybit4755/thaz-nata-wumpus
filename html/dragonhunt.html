@@ -1,0 +1,63 @@
+<HTML>
+	<HEAD>
+		<TITLE>dragonhunt</TITLE>
+
+        <link rel="stylesheet" href="../css/css.css"></link>
+        <link rel="stylesheet" href="../css/dragonhunt.css"></link>
+        <link rel="stylesheet" href="../css/chits.css"></link>
+
+        <script type="text/javascript" src="../js/js.js"></script>
+        <script type="text/javascript" src="../js/hex.js"></script>
+        <script type="text/javascript" src="../js/socko.js"></script>
+        <script type="text/javascript" src="../js/dragonhunt.js"></script>
+		<script type="text/javascript">window.onload = function() { new Game() }</script>
+	</HEAD>
+	<BODY>
+		<states>
+			<join>
+				<label>Join Game</label>
+				<div> 
+					<wat>username</wat> 
+					<input type="text" size="52" placeholder="your name goes here"></input> 
+				</div>
+				<div> 
+					<wat>server</wat> 
+					<input type="text" size="52" value="ws://localhost:47474/chat/"></input>
+				</div>
+				<div> 
+					<wat>number of players</wat> 
+					<input type="text" size="4" value="2"></input> 
+				</div>
+				<div>
+					<button>connect</button>
+				</div>
+				<status>
+				</status>
+			</join>
+
+			<play>
+				<main>
+					<banner></banner>
+					<shared>
+						<messages></messages>
+						<entry>
+							<input id="chat_input" type="text" size="60"></input>
+							<button>say</button>
+						</entry>
+					</shared>
+					<forces>
+						<ready>
+							<label>ready</label>
+						</ready>
+						<dead>
+							<label>dead</label>
+						</dead>
+					</forces>
+				</main>
+				<board></board>
+			</play>
+
+			<victory></victory>
+		</states>
+	</BODY>
+</HTML>

@@ -1,0 +1,156 @@
+body {
+    background:
+        linear-gradient(
+            0deg
+            , rgba( 0, 0, 0, 0.90 )  0%
+            , rgba( 0, 0, 0, 0.05 )  22%
+            , rgba( 0, 0, 0, 0.00 )  100%
+        )
+        , url('../images/scanned/splash.jpg')
+    ;
+    background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* ----------------------------------------------------------------------------- */
+
+states > * {
+	display:block;
+	position:absolute;
+	imargin:0px; 
+	ipadding:0px; 
+	top:0px; 
+	left:0px;
+}
+
+/* ----------------------------------------------------------------------------- */
+
+join {
+	display: block;
+	background: rgba( 255,192,164,0.8 );
+	margin:22%;
+	width:30em;
+	padding:1em;
+	border:1px solid black;
+	border-radius:0.25em;
+}
+
+join div {
+	width:30em;
+}
+
+wat {
+	display:inline-block;
+	width:9em;
+	font-weight:600;
+}
+
+join button {
+	width:44em;
+	margin-top:0.9em;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+status {
+	display:block;
+	overflow:scroll;
+	width:30em;
+	height:8em;
+	margin-top:1em;
+	padding:0.2em;
+	border-radius: 0.2em;
+	border-top:    1px solid rgba( 0,0,0, 0.4 );
+	border-left:   1px solid rgba( 0,0,0, 0.4 );
+	border-right:  1px solid rgba( 255,255,255,0.2);
+	border-bottom: 1px solid rgba( 255,255,255,0.2);
+}
+
+nfo {
+	display:block;
+	width:64em;
+}
+
+/* ----------------------------------------------------------------------------- */
+
+play {
+	display: none;
+	background:white;
+}
+
+main > * {
+	width: 1300px;
+}
+
+banner {
+	background:url('../images/scanned/splash.jpg') -40px -30px;
+	width: 2890;
+	height: 900px;
+	zoom:15%;
+	display:block;
+	border:1px solid red;
+}
+
+main > shared > messages {
+	display:block;
+	height:300px;
+	border:1px solid green;
+	overflow: scroll;
+}
+
+main > shared > entry {
+	display:block;
+	border:1px solid blue;
+}
+
+main > shared > entry > input {
+}
+
+main > shared > entry > button {
+	width:30px;
+}
+
+forces > * {
+	display: block;
+	overflow: scroll;
+	height: 230px;
+	border: 1px solid purple;
+}
+
+label {
+	font-size:large;
+	font-weight:bold;
+	display: block;
+	user-select: none;
+	padding-bottom: 0.4em;
+}
+
+ready {
+}
+
+dead {
+}
+
+board {
+	width: 3383px;
+	height: 3709px;
+	background: url('../images/scanned/board.jpg');
+	padding:0px;
+	margin:0px;
+	zoom:25%;
+	display:block;
+}
+
+play > board {
+	top:0px;
+	left: 1740;
+	position:absolute;
+}
+
+/* ----------------------------------------------------------------------------- */
+
+victory {
+}
+
+/* ----------------------------------------------------------------------------- */

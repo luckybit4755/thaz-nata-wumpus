@@ -1,3 +1,10 @@
+const ALPHABET = {
+	  all:        'abcdefghijklmnopqrstuvwxvyz'
+	, vowels:     'aeiou'
+	, consonants: 'bcdfghjklmnpqrstvwxvyz'
+	, popular:    'mjcdysthlnr'
+};
+
 const JZ = {
 	  toString: function( o, r, s ) { return JSON.stringify( o, r, s ) }
 	, json:     function( o, r, s ) { return this.toString( o, r, s ) }
@@ -21,7 +28,7 @@ const JZ = {
 	, fmt: function() {
 		let a = arguments;
 		let s = a[ 0 ];
-		for ( let i = 1 ; i < a.length ; i++ ) s = s.replace( /%[a-z]*/, a[ i ] );
+		for ( let i = 1 ; i < a.length ; i++ ) s = s.replace( /%/, a[ i ] );
 		return s;
 	}
 	, get: function( url, callback ) {
@@ -29,6 +36,42 @@ const JZ = {
 		x.onload = function(e) { callback( e, this.responseText ) };
 		x.open( 'get', url, true );
 		x.send();
+	}
+	, randomPlayerName: function( length ) {
+		return this.randomWord( length ) + this.randomIn() + this.randomIn();
+	}
+	, randomWord: function( length ) {
+		length = this.ifUndefined( length, 6 );
+		let word = '';
+		let pick = JZ.pickRandom;
+		for ( let i = 0 ; i < length ; i++ ) {
+			word += i % 2 ? pick( ALPHABET.vowels ) : pick( ALPHABET.popular );
+		}
+		return word;
+	}
+	, pickRandom: function( argz ) {
+		return argz[ JZ.randomIn( argz.length ) ];
+	}
+	, randomIn: function( min, max ) {
+		min = this.ifUndefined( min, 9 );
+		if ( this.isUndefined( max ) ) {
+			max = min;
+			min = 0;
+		}
+		return min + Math.floor( Math.random() * ( max - min ) );
+	}
+	, isUndefined: function( v ) {
+		return 'undefined' === typeof( v );
+	}
+	, ifUndefined: function( v, def ) {
+		return this.isUndefined( v ) ? def : v;
+	}
+	, ruckus: function() {
+		let fuss = {};
+		for ( let i = 0 ; i < arguments.length ; i += 2 ) {
+			fuss[ arguments[ i ] ] = arguments[ i + 1 ];
+		}
+		return fuss;
 	}
 };
 
@@ -78,6 +121,25 @@ const XOZO_DOCUMENT = function( fcku ) {
 		}
 		return n;
 	};
+	fcku.byContents = function( value ) {
+        let treeWalker = document.createTreeWalker( document.body );
+        while( treeWalker.nextNode() ) {
+            let node = treeWalker.currentNode;
+            if ( node.nodeValue && value === node.nodeValue.trim() ) {
+                return node.parentNode;
+            }
+        }
+        return false;
+    };
+	fcku.inputFor = function( contents ) {
+        let parent = document.byContents( contents ).parentNode;
+        for ( let i = 0 ; i < parent.childNodes.length ; i++ ) {
+            if ( 'INPUT' === parent.childNodes[ i ].nodeName ) {
+                return parent.childNodes[ i ];
+            }
+        }
+    };
+
 	return fcku;
 };
 
@@ -141,4 +203,22 @@ const XOZO_CANVAS = function( fcku ) {
 	};
 
 	return fcku;
-}
+};
+
+const FX = {
+	fade: function( target, callback ) {
+		target.style.opacity = 0.99;
+		let lol = setInterval( 
+			function() {
+				target.style.opacity *= target.style.opacity;
+				if ( target.style.opacity < 0.05 ) {
+					clearInterval( lol );
+					target.style.display = 'none';
+					callback();
+				}
+			}
+			, 100
+		);
+	}
+};
+
