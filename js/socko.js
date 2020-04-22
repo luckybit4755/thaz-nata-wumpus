@@ -112,7 +112,7 @@ const socko = function( parameters ) {
 
 	//-----------------------------------------------------------------------------
 
-	self.sendTillAcknowleged = function( message, acks, callback, delay ) {
+	self.sendTillAcknowledged = function( message, acks, callback, delay ) {
 		delay = JZ.ifUndefined( delay, 333 );
 
 		message.head = self.__header();

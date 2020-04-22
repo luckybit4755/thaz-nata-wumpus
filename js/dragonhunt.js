@@ -16,6 +16,8 @@ const Game = function() {
 		let players  = document.inputFor( 'number of players' );
 		let connect  = document.byContents( 'connect' );
 
+		server.value = server.value.replace( /localhost/, document.location.host );
+
 		connect.onclick = function() {
 			self.user = username.value;
 			self.players[ self.user ] = 1;
@@ -33,7 +35,7 @@ const Game = function() {
 
 		if ( TESTING ) {
 			username.value = JZ.randomPlayerName();
-			//connect.click();
+			//connect.click(); // something is hinky if old users are still around... :-(
 		}
 	};
 
@@ -61,7 +63,7 @@ const Game = function() {
 	self.sendHello = function() {
 		self.state = 'starting';
 		let message = {action:self.state};
-		self.socko.sendTillAcknowleged( message, self.playerCount - 1 );
+		self.socko.sendTillAcknowledged( message, self.playerCount - 1 );
 			
 		document.theTag( 'status' ).prepend( document.nu( {tag:'nfo',text:'waiting on other players'} ) );
 	};
@@ -71,6 +73,40 @@ const Game = function() {
 	self.startGame = function() {
 		console.log( 'sweet...' );
 		document.theTag( 'play' ).style.display = 'block';
+
+		self.messages = document.theTag( 'messages' );
+
+		let chat_input = document.byId( 'chat_input' );
+		document.byContents( 'say' ).onclick = function() {
+			if ( !chat_input.value ) return;
+
+			let message = {action:'sez',value:chat_input.value};
+			self.socko.sendTillAcknowledged( message, self.playerCount - 1 );
+			chat_input.value = '';
+
+			self.on_sez( message );
+		}
+
+		if ( TESTING ) {
+			chat_input.value = 'sup?';
+			document.byContents( 'say' ).click();
+		}
+	};
+
+	self.on_sez = function( message ) {
+		if ( !self.messages ) return;
+		let txt = message.head.from + ': ' + message.value;
+		self.messages.prepend( 
+			document.nu( 
+				{
+					  tag:'message'
+					, kids:[
+						  {tag:'from','text':message.head.from}
+						, {tag:'said','text':message.value}
+					]
+				}
+			)
+		);
 	};
 
 	/* ============================================================================= */

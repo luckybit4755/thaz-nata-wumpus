@@ -30,14 +30,15 @@ join {
 	display: block;
 	background: rgba( 255,192,164,0.8 );
 	margin:22%;
-	width:30em;
+	width:33em;
 	padding:1em;
 	border:1px solid black;
 	border-radius:0.25em;
 }
 
 join div {
-	width:30em;
+	width:92%;
+	white-space:nowrap;
 }
 
 wat {
@@ -47,7 +48,7 @@ wat {
 }
 
 join button {
-	width:44em;
+	width:98%;
 	margin-top:0.9em;
 	margin-left:auto;
 	margin-right:auto;
@@ -56,8 +57,8 @@ join button {
 status {
 	display:block;
 	overflow:scroll;
-	width:30em;
-	height:8em;
+	width:98%;
+	height:6em;
 	margin-top:1em;
 	padding:0.2em;
 	border-radius: 0.2em;
@@ -94,9 +95,20 @@ banner {
 
 main > shared > messages {
 	display:block;
-	height:300px;
+	height:8em;
 	border:1px solid green;
 	overflow: scroll;
+}
+main > shared > messages > message {
+	display:block;
+}
+main > shared > messages > message > from {
+	display:inline-block;
+	width:6em;
+	background:#EEE;
+}
+main > shared > messages > message > said {
+	display:inline-block;
 }
 
 main > shared > entry {

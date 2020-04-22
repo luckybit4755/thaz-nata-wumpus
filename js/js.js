@@ -100,7 +100,7 @@ const XOZO_DOCUMENT = function( fcku ) {
 	fcku.add = function( n ) { return fcku.body.appendChild( n ) };
 	fcku.byTag = function( tag ) { return fcku.getElementsByTagName( tag ) };
 	fcku.theTag = function( tag ) { return XOZO( fcku.byTag( tag )[ 0 ] ) };
-	fcku.byId  = function( id ) { return document.getElementId( id ) };
+	fcku.byId  = function( id ) { return document.getElementById( id ) };
 	fcku.nu = function( attributes ) {
 		let tag = attributes.tag;
 		let isText = ( 'text' === tag );
